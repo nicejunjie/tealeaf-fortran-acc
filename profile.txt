@@ -1,0 +1,379 @@
+CrayPat/X:  Version 7.1.1 Revision 7c0ddd79b  08/19/19 17:01:59
+
+Number of PEs (MPI ranks):    1
+                           
+Numbers of PEs per Node:      1
+                           
+Numbers of Threads per PE:    1
+                           
+Number of Cores per Socket:  12
+
+Execution start time:  Wed Jan 15 21:14:14 2020
+
+System name and speed:  nid00956  2.601 GHz (nominal)
+
+Intel Haswell    CPU  Family:  6  Model: 63  Stepping:  2
+
+DRAM:  64 GiB DDR4-2133 on 2.6 GHz nodes
+
+
+Current path to data file:
+  /N/slate/lijunj/porting/tealeaf_fortran/openacc/run/tea_leaf+2234-956s/.   (RTS)
+
+
+Notes for table 1:
+
+  This table shows functions that have significant exclusive sample
+    hits, averaged across ranks.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O samp_profile ...
+
+Table 1:  Profile by Function
+
+  Samp% |    Samp | Imb. |  Imb. | Group
+        |         | Samp | Samp% |  Function
+       
+ 100.0% | 3,802.0 |   -- |    -- | Total
+|-----------------------------------------------------------------------------
+|  75.5% | 2,869.0 |   -- |    -- | USER
+||----------------------------------------------------------------------------
+||  74.4% | 2,827.0 |   -- |    -- | tea_leaf_kernel_module_tea_leaf_kernel_solve_
+||============================================================================
+|  24.3% |   922.0 |   -- |    -- | ETC
+||----------------------------------------------------------------------------
+||  24.2% |   919.0 |   -- |    -- | __c_mcopy8_avx
+|=============================================================================
+
+Observation:  Stall Cycles
+
+    Stall cycles are 79.8% of total cycles, which exceeds the guideline
+    of 40.0%. This can be caused by issues in the program such as
+    saturation of memory bandwidth.
+
+
+Observation:  Program sensitivity to memory latency
+
+    The relatively low memory bandwidth utilization but significant rate
+    of stalls in the program suggest that its performance is limited by
+    memory latency.
+    It could be beneficial to improve prefetching in loops in functions
+    high in the profile, by modifying compiler-generated prefetches or
+    inserting directives into the source code.
+
+
+Observation:  MFLOPS not available on Intel Haswell
+
+    The document that specifies performance monitoring events for Intel
+    processors does not include events that could be used to compute a
+    count of floating point operations for Haswell processors: Intel 64
+    and IA-32 Architectures Software Developer's Manual, Order Number
+    253665-050US, February 2014.
+
+
+Notes for table 2:
+
+  This table shows functions, and line numbers within functions, that
+    have significant exclusive sample hits, averaged across ranks.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O samp_profile+src ...
+
+Table 2:  Profile by Group, Function, and Line
+
+  Samp% |    Samp | Imb. |  Imb. | Group
+        |         | Samp | Samp% |  Function
+        |         |      |       |   Source
+        |         |      |       |    Line
+       
+ 100.0% | 3,802.0 |   -- |    -- | Total
+|-----------------------------------------------------------------------------
+|  75.5% | 2,869.0 |   -- |    -- | USER
+||----------------------------------------------------------------------------
+||  74.4% | 2,827.0 |   -- |    -- | tea_leaf_kernel_module_tea_leaf_kernel_solve_
+3|        |         |      |       |  porting/tealeaf_fortran/openacc/tea_leaf_jacobi.f90
+4|  74.3% | 2,823.0 |   -- |    -- |   line.159
+||============================================================================
+|  24.3% |   922.0 |   -- |    -- | ETC
+||----------------------------------------------------------------------------
+||  24.2% |   919.0 |   -- |    -- | __c_mcopy8_avx
+|=============================================================================
+
+Notes for table 3:
+
+  This table shows HW performance counter data for the whole program,
+    averaged across ranks or threads, as applicable.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O hwpc ...
+
+Table 3:  Program HW Performance Counter Data
+
+Total
+
+  
+==============================================================================
+  Total
+------------------------------------------------------------------------------
+  Thread Time                                             38.136851 secs
+  UNHALTED_REFERENCE_CYCLES                          98,254,708,604 
+  CPU_CLK_THREAD_UNHALTED:THREAD_P                  120,924,040,808 
+  DTLB_LOAD_MISSES:WALK_DURATION                        704,664,883 
+  INST_RETIRED:ANY_P                                 75,838,559,709 
+  RESOURCE_STALLS:ANY                                96,462,728,666 
+  OFFCORE_RESPONSE_0:ANY_REQUEST:L3_MISS_LOCAL        2,158,456,905 
+  OFFCORE_RESPONSE_1:ANY_REQUEST:L3_MISS_REMOTE             117,269 
+  CPU CLK Boost                                                1.23 X
+  Resource stall cycles / Cycles                              79.8% 
+  Memory traffic GBytes                      3.622G/sec      138.15 GB
+  Local Memory traffic GBytes                3.622G/sec      138.14 GB
+  Remote Memory traffic GBytes               0.197M/sec        0.01 GB
+  Memory Traffic / Nominal Peak                                5.3% 
+  DTLB Miss Ovhd                                        704,664,883 cycles  0.6% cycles
+  Retired Inst per Clock                                       0.63 
+==============================================================================
+
+Notes for table 4:
+
+  This table show the average time and number of bytes read from each
+    input file, taking the average over the number of ranks that read
+    from the file.  It also shows the number of read operations, and
+    average rates.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O read_stats ...
+
+Table 4:  File Input Stats by Filename
+
+ Avg Read | Avg Read |   Read Rate | Number |      Avg | Bytes/ | File Name=!x/^/(proc|sys)/
+ Time per |  MiBytes | MiBytes/sec |     of |    Reads |   Call |  PE=HIDE
+   Reader |      per |             | Reader |      per |        | 
+     Rank |   Reader |             |  Ranks |   Reader |        | 
+          |     Rank |             |        |     Rank |        | 
+|-----------------------------------------------------------------------------
+| 0.000375 | 0.001062 |    2.834243 |      1 |  1,116.0 |   1.00 | tea.in
+| 0.000277 | 0.018156 |   65.467319 |      1 | 19,038.0 |   1.00 | tea.in.tmp
+|=============================================================================
+
+Notes for table 5:
+
+  This table show the average time and number of bytes written to each
+    output file, taking the average over the number of ranks that
+    wrote to the file.  It also shows the number of write operations,
+    and average rates.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O write_stats ...
+
+Table 5:  File Output Stats by Filename
+
+      Avg |      Avg |  Write Rate | Number |    Avg | Bytes/ | File Name=!x/^/(proc|sys)/
+    Write |    Write | MiBytes/sec |     of | Writes |   Call |  PE=HIDE
+ Time per |  MiBytes |             | Writer |    per |        | 
+   Writer |      per |             |  Ranks | Writer |        | 
+     Rank |   Writer |             |        |   Rank |        | 
+          |     Rank |             |        |        |        | 
+|-----------------------------------------------------------------------------
+| 0.000415 | 0.002502 |    6.025101 |      1 |  230.0 |  11.41 | stderr
+| 0.000048 | 0.007129 |  148.812532 |      1 |  507.0 |  14.74 | tea.out
+| 0.000025 | 0.009078 |  362.034928 |      1 |   38.0 | 250.50 | tea.in.tmp
+| 0.000013 | 0.000217 |   16.937042 |      1 |   18.0 |  12.67 | stdout
+|=============================================================================
+
+Table 6:  Lustre File Information
+
+  File Path |    Stripe | Stripe | Stripe | OST list
+            |      size | offset |  count | 
+----------------------------------------------------
+    tea.out | 1,048,576 |      0 |      1 | 0
+     tea.in | 1,048,576 |      0 |      1 | 8
+ tea.in.tmp | 1,048,576 |      0 |      1 | 12
+====================================================
+
+Notes for table 7:
+
+  This table shows energy and power usage for the nodes with the
+    maximum, mean, and minimum usage, as well as the sum of usage over
+    all nodes.
+    Energy and power for accelerators is also shown, if applicable.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O program_energy ...
+
+Table 7:  Program energy and power usage (from Cray PM)
+
+   Node |     Node |   Process | Total
+ Energy |    Power |      Time | 
+    (J) |      (W) |           | 
+--------------------------------------
+  4,093 |  107.262 | 38.158834 | Total
+======================================
+
+Notes for table 8:
+
+  This table shows values shown for HiMem calculated from information
+    in the /proc/self/numa_maps files captured near the end of the
+    program. It is the total size of all pages, including huge pages,
+    that were actually mapped into physical memory from both private
+    and shared memory segments.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O himem ...
+
+Table 8:  Memory High Water Mark by Numa Node
+
+   Process |     HiMem |     HiMem | Numanode
+     HiMem | Numa Node | Numa Node | 
+ (MiBytes) |         0 |         1 | 
+           | (MiBytes) | (MiBytes) | 
+|----------------------------------------------
+|     134.4 |     133.6 |       0.8 | numanode.0
+|==============================================
+
+Notes for table 9:
+
+  This table shows memory traffic to local and remote memory for numa
+    nodes, taking for each numa node the maximum value across nodes.
+    It also shows the balance in memory traffic by showing the top 3
+    and bottom 3 node values.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O mem_bw ...
+
+Table 9:  Memory Bandwidth by Numanode
+
+  Memory |   Local |  Remote |    Thread |  Memory |  Memory | Numanode
+ Traffic |  Memory |  Memory |      Time | Traffic | Traffic | 
+  GBytes | Traffic | Traffic |           |  GBytes |       / | 
+         |  GBytes |  GBytes |           |   / Sec | Nominal | 
+         |         |         |           |         |    Peak | 
+|------------------------------------------------------------------------
+|  138.15 |  138.14 |    0.01 | 38.136851 |    3.62 |    5.3% | numanode.0
+|========================================================================
+
+Notes for table 10:
+
+  This table shows total wall clock time for the ranks with the
+    maximum, mean, and minimum time, as well as the average across
+    ranks.
+    It also shows maximum memory usage from /proc/self/numa_maps for
+    those ranks, and on average.  The usage is total size of all
+    pages, including huge pages, that were actually mapped into
+    physical memory from both private and shared memory segments.
+  For further explanation, see the "General table notes" below,
+    or use:  pat_report -v -O program_time ...
+
+Table 10:  Wall Clock Time, Memory High Water Mark
+
+   Process |   Process | Total
+      Time |     HiMem | 
+           | (MiBytes) | 
+------------------------------
+ 38.158834 |     134.4 | Total
+==============================
+
+========================  Additional details  ========================
+
+
+
+General table notes:
+
+    The default notes for a table are based on the default definition of
+    the table, and do not account for the effects of command-line options
+    that may modify the content of the table.
+    
+    Detailed notes, produced by the pat_report -v option, do account for
+    all command-line options, and also show how data is aggregated, and
+    if the table content is limited by thresholds, rank selections, etc.
+    
+    An imbalance metric in a line is based on values in main threads
+    across multiple ranks, or on values across all threads, as applicable.
+    
+    An imbalance percent in a line is relative to the maximum value
+    for that line across ranks or threads, as applicable.
+    
+Experiment:  samp_cs_time
+
+Sampling interval:  10000 microsecs
+
+Original path to data file:
+  /N/slate/lijunj/porting/tealeaf_fortran/openacc/run/tea_leaf+2234-956s/xf-files   (RTS)
+
+Original program:
+  /N/slate/lijunj/porting/tealeaf_fortran/openacc/tea_leaf+orig
+
+Instrumented with:
+  pat_build -f -O lite-samples -Drtenv=PAT_RT_REPORT_METHOD=team \
+    -Drtenv=PAT_RT_REPORT_CLEANUP=skip tea_leaf+orig tea_leaf
+
+  Option file "lite-samples" contained:
+    -Drtenv=PAT_RT_PERFCTR=default_samp
+    -Drtenv=PAT_RT_EXPERIMENT=samp_cs_time
+    -Drtenv=PAT_RT_SAMPLING_MODE=3
+    -Dreport=y
+    -Drtenv=PAT_RT_REPORT_CMD=pat_report,-O,lite-samples,-s,summoner=rtl
+    -g upc
+    -g caf
+    -g mpi
+    -g shmem
+    -g syscall
+    -g io
+
+Instrumented program:
+  /N/slate/lijunj/porting/tealeaf_fortran/openacc/run/./tea_leaf
+
+Program invocation:
+  /N/slate/lijunj/porting/tealeaf_fortran/openacc/run/./tea_leaf
+
+Exit Status:  0 for 1 PE
+
+Memory pagesize:  4 KiB
+
+Memory hugepagesize:  Not Available
+
+Programming environment:  PGI
+
+Runtime environment variables:
+  CRAYPAT_ALPS_COMPONENT=/opt/cray/pe/perftools/7.1.1/sbin/pat_alps
+  CRAYPAT_COMPILER_OPTIONS=1
+  CRAYPAT_LD_LIBRARY_PATH=/opt/cray/pe/gcc-libs:/opt/cray/gcc-libs:/opt/cray/pe/perftools/7.1.1/lib64
+  CRAYPAT_LITE=lite-samples
+  CRAYPAT_OPTS_EXECUTABLE=libexec64/opts
+  CRAYPAT_ROOT=/opt/cray/pe/perftools/7.1.1
+  CRAYPE_VERSION=2.6.1
+  DVS_VERSION=0.9.0
+  MODULE_VERSION=3.2.11.3
+  MODULE_VERSION_STACK=3.2.11.3
+  MPICH_ABORT_ON_ERROR=1
+  MPICH_DIR=/opt/cray/pe/mpt/7.7.10/gni/mpich-pgi/
+  PAT_BUILD_PAPI_LIBDIR=/opt/cray/pe/papi/5.7.0.2/lib64
+  PAT_REPORT_PRUNE_NAME=_cray$mt_execute_,_cray$mt_start_,__cray_hwpc_,f_cray_hwpc_,cstart,__pat_,pat_region_,PAT_,OMP.slave_loop,slave_entry,_new_slave_entry,_thread_pool_slave_entry,THREAD_POOL_join,__libc_start_main,_start,__start,start_thread,__wrap_,UPC_ADIO_,_upc_,upc_,__caf_,__pgas_,syscall,__device_stub
+  PAT_RT_EXPERIMENT=samp_cs_time
+  PAT_RT_PERFCTR=default_samp
+  PAT_RT_REPORT_CLEANUP=skip
+  PAT_RT_REPORT_CMD=pat_report,-O,lite-samples,-s,summoner=rtl
+  PAT_RT_REPORT_METHOD=team
+  PAT_RT_SAMPLING_MODE=3
+  PERFTOOLS_VERSION=7.1.1
+  PMI_CONTROL_PORT=22129
+  PMI_CRAY_NO_SMP_ORDER=0
+  PMI_GNI_COOKIE=2847277056:2847342592
+  PMI_GNI_DEV_ID=0:0
+  PMI_GNI_LOC_ADDR=1212:1212
+  PMI_GNI_PTAG=18:19
+  PMI_NO_FORK=1
+
+Report time environment variables:
+    CRAYPAT_ROOT=/opt/cray/pe/perftools/7.1.1
+    PAT_REPORT_PRUNE_NAME=_cray$mt_execute_,_cray$mt_start_,__cray_hwpc_,f_cray_hwpc_,cstart,__pat_,pat_region_,PAT_,OMP.slave_loop,slave_entry,_new_slave_entry,_thread_pool_slave_entry,THREAD_POOL_join,__libc_start_main,_start,__start,start_thread,__wrap_,UPC_ADIO_,_upc_,upc_,__caf_,__pgas_,syscall,__device_stub
+
+Number of MPI control variables collected:  108
+
+  (To see the list, specify: -s mpi_cvar=show)
+
+Report command line options:  <none>
+
+Operating system:
+  Linux 4.4.103-6.38_4.0.105-cray_ari_c #1 SMP Fri Aug 30 20:20:05 UTC 2019 (f8a8f04)
+
+Hardware performance counter events:
+   UNHALTED_REFERENCE_CYCLES                      Unhalted reference cycles
+   CPU_CLK_THREAD_UNHALTED:THREAD_P               Count core clock cycles whenever the clock signal on the specificcore is running (not halted):Cycles when thread is not halted
+   DTLB_LOAD_MISSES:WALK_DURATION                 Data TLB load misses:Cycles when PMH is busy with page walks
+   INST_RETIRED:ANY_P                             Number of instructions retired (Precise Event):Number of instructions retired. General Counter - architectural event
+   RESOURCE_STALLS:ANY                            Cycles Allocation is stalled due to Resource Related reason:Cycles Allocation is stalled due to Resource Related reason
+   OFFCORE_RESPONSE_0:ANY_REQUEST:L3_MISS_LOCAL   Offcore response event (must provide at least one request type andeither any_response or any combination of supplier + snoop):Request: combination of all request umasks:Supplier: counts L3 misses to local DRAM
+   OFFCORE_RESPONSE_1:ANY_REQUEST:L3_MISS_REMOTE  Offcore response event (must provide at least one request type andeither any_response or any combination of supplier + snoop):Request: combination of all request umasks:Supplier: counts L3 misses to remote node
+

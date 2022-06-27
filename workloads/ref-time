@@ -1,0 +1,35 @@
+
+Hardware:   dual Xeon E5-2640 v2 + Tesla K20
+Software:   PGI/19.4 + OpenMPI/3.1.4
+
+-- problem 6 (small problem) : 
+
+*mpi rank 1 : 
+real	1m13.791s
+user	1m12.640s
+sys	0m0.228s
+
+*mpi rank 16: 
+real	0m7.688s
+user	1m59.308s
+sys	0m0.820s
+
+*openacc: 
+real	0m13.389s
+user	0m5.536s
+sys	0m2.320s
+
+
+-- problem 7 (medium size problem): 
+
+mpi rank 16: 
+real	5m21.711s
+user	85m23.308s
+sys	0m7.508s
+
+
+*openacc: GPU mem ~2GB
+real	1m37.851s
+user	0m58.652s
+sys	0m27.748s
+
